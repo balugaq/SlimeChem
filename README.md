@@ -1,2 +1,2 @@
-# SlimeChem
-slimefun chemistry
+# 粘液化学
+它在游戏里添加了化学元素等物品/化学机器
