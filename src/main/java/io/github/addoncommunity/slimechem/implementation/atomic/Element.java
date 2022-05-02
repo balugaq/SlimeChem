@@ -1,22 +1,24 @@
 package io.github.addoncommunity.slimechem.implementation.atomic;
 
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.bukkit.Material;
+
 import io.github.addoncommunity.slimechem.implementation.atomic.isotopes.Isotope;
 import io.github.addoncommunity.slimechem.implementation.attributes.Atom;
 import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
+import io.github.addoncommunity.slimechem.implementation.subatomic.Nucleon;
 import io.github.addoncommunity.slimechem.lists.Constants;
 import io.github.addoncommunity.slimechem.utils.SubNum;
 import io.github.addoncommunity.slimechem.utils.Util;
-import io.github.addoncommunity.slimechem.implementation.subatomic.Nucleon;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import org.bukkit.Material;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 /**
  * Enum of chemical elements: name, mass, number, symbol, series
@@ -252,4 +254,34 @@ public enum Element implements Ingredient, Atom {
         private final String color;
 
     }
+
+	@Override
+	public io.github.addoncommunity.slimechem.implementation.attributes.SlimefunItemStack getItem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getMass() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getRadiationLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isRadioactive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
