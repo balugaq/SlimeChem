@@ -1,13 +1,14 @@
 package io.github.addoncommunity.slimechem.implementation.atomic;
 
-import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
-import io.github.addoncommunity.slimechem.utils.SubNum;
-import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import javax.annotation.Nonnull;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
+import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
+import io.github.addoncommunity.slimechem.utils.SubNum;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import lombok.Getter;
 
 /**
  * Enum of molecules: name, formula, ingredients
@@ -151,4 +152,10 @@ public enum Molecule implements Ingredient {
     public MoleculeIngredient asIngredient() {
         return this.asIngredient(1);
     }
+
+	@Override
+	public SlimefunItemStack getItem() {
+		// TODO Auto-generated method stub
+		return item;
+	}
 }

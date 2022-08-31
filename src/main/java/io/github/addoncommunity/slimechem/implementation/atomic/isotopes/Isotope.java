@@ -1,29 +1,31 @@
 package io.github.addoncommunity.slimechem.implementation.atomic.isotopes;
 
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import io.github.addoncommunity.slimechem.implementation.atomic.Element;
 import io.github.addoncommunity.slimechem.implementation.atomic.MoleculeIngredient;
+import io.github.addoncommunity.slimechem.implementation.attributes.Atom;
 import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
 import io.github.addoncommunity.slimechem.lists.Constants;
 import io.github.addoncommunity.slimechem.utils.SubNum;
 import io.github.addoncommunity.slimechem.utils.SuperNum;
 import io.github.addoncommunity.slimechem.utils.Util;
 import io.github.mooy1.infinitylib.items.StackUtils;
-import io.github.addoncommunity.slimechem.implementation.atomic.Element;
-import io.github.addoncommunity.slimechem.implementation.attributes.Atom;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Class for isotopes
@@ -222,4 +224,16 @@ public class Isotope implements Ingredient, Atom {
     public double getMass() {
         return this.mass;
     }
+
+	@Override
+	public io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack getItem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getRadiationLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

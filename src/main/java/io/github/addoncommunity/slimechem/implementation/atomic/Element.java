@@ -248,7 +248,14 @@ public enum Element implements Ingredient, Atom {
         UNKNOWN("Unknown", "PURPLE"),
         CUSTOM("Custom", "MAGENTA");
 
-        @Nonnull
+        Series(String name, String color) {
+			this.name = name;
+			this.color = color;
+		}
+		String getColor() {
+			return color;
+		}
+		@Nonnull
         private final String name;
         @Nonnull
         private final String color;
@@ -256,32 +263,32 @@ public enum Element implements Ingredient, Atom {
     }
 
 	@Override
-	public io.github.addoncommunity.slimechem.implementation.attributes.SlimefunItemStack getItem() {
-		// TODO Auto-generated method stub
-		return null;
+	public SlimefunItemStack getItem() {
+		return item;
 	}
 
 	@Override
 	public double getMass() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mass;
 	}
 
 	@Override
 	public int getNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		return number;
 	}
 
 	@Override
 	public int getRadiationLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return radiationLevel;
 	}
 
 	@Override
 	public boolean isRadioactive() {
+		return radioactive;
+	}
+
+	public String getName() {
 		// TODO Auto-generated method stub
-		return false;
+		return name;
 	}
 }

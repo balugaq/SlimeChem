@@ -16,7 +16,17 @@ public final class StringUtil {
 
     @Data
     public static class NumberAndString {
-        private final int number;
+        public NumberAndString(int number, String string) {
+			this.number = number;
+			this.string = string;
+		}
+		public int getNumber() {
+			return number;
+		}
+		public String getString() {
+			return string;
+		}
+		private final int number;
         private final String string;
     }
 

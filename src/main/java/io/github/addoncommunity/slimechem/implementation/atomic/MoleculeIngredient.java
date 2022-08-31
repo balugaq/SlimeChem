@@ -2,6 +2,8 @@ package io.github.addoncommunity.slimechem.implementation.atomic;
 
 import io.github.addoncommunity.slimechem.implementation.atomic.isotopes.Isotope;
 import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
+import io.github.addoncommunity.slimechem.implementation.attributes.Itemable;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.inventory.ItemStack;
@@ -51,10 +53,20 @@ public class MoleculeIngredient {
         int size = (int) Math.ceil(this.amount / 64f);
         ItemStack[] items = new ItemStack[size];
         for (int i = 0 ; i < size - 1 ; i++) {
-            items[i] = new CustomItem(this.ingredient.getItem(), 64);
+            items[i] = new CustomItemStack(this.ingredient.getItem(), 64);
         }
-        items[size - 1] = new CustomItem(this.getIngredient().getItem(), this.amount % 64);
+        items[size - 1] = new CustomItemStack(this.getIngredient().getItem(), this.amount % 64);
         return items;
     }
+
+	private Ingredient getIngredient() {
+		// TODO Auto-generated method stub
+		return ingredient;
+	}
+
+	public String getFormula() {
+		// TODO Auto-generated method stub
+		return formula;
+	}
     
 }

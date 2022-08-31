@@ -1,18 +1,19 @@
 package io.github.addoncommunity.slimechem.implementation.atomic.isotopes;
 
-import io.github.addoncommunity.slimechem.implementation.subatomic.Lepton;
-import io.github.addoncommunity.slimechem.implementation.atomic.Element;
-import io.github.addoncommunity.slimechem.implementation.subatomic.Boson;
-import io.github.addoncommunity.slimechem.implementation.subatomic.Nucleon;
-import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import io.github.addoncommunity.slimechem.implementation.atomic.Element;
+import io.github.addoncommunity.slimechem.implementation.subatomic.Boson;
+import io.github.addoncommunity.slimechem.implementation.subatomic.Lepton;
+import io.github.addoncommunity.slimechem.implementation.subatomic.Nucleon;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import lombok.Getter;
 
 public enum DecayType {
 
@@ -78,6 +79,12 @@ public enum DecayType {
             case ELECTRON_CAPTURE:
                 this.particles.addAll(Arrays.asList(Lepton.ELECTRON_NEUTRINO.getItem(), Boson.PHOTON.getItem()));
                 break;
+		case DOUBLE_ELECTRON_CAPTURE:
+			break;
+		case STABLE:
+			break;
+		default:
+			break;
         }
     }
 
