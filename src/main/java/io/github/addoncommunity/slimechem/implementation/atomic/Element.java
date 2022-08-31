@@ -252,7 +252,7 @@ public enum Element implements Ingredient, Atom {
 			this.name = name;
 			this.color = color;
 		}
-		String getColor() {
+		public String getColor() {
 			return color;
 		}
 		@Nonnull
@@ -290,5 +290,10 @@ public enum Element implements Ingredient, Atom {
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
+	}
+
+	public Series getSeries() {
+		// TODO Auto-generated method stub
+		return series;
 	}
 }

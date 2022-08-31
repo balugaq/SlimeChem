@@ -236,4 +236,19 @@ public class Isotope implements Ingredient, Atom {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public static EnumMap<Element, Set<Isotope>> getIsotopes() {
+		// TODO Auto-generated method stub
+		return isotopes;
+	}
+
+	public Element getElement() {
+		// TODO Auto-generated method stub
+		return element;
+	}
+
+	public DecayType getDecayType() {
+		// TODO Auto-generated method stub
+		return decayType;
+	}
 }
