@@ -5,21 +5,21 @@ import io.github.addoncommunity.slimechem.implementation.attributes.Atom;
 import io.github.addoncommunity.slimechem.lists.Categories;
 import io.github.addoncommunity.slimechem.lists.Items;
 import io.github.addoncommunity.slimechem.setup.Registry;
-import io.github.mooy1.infinitylib.abstracts.AbstractTicker;
-import io.github.mooy1.infinitylib.items.StackUtils;
+import io.github.mooy1.infinitylib.common.StackUtils;
+import io.github.mooy1.infinitylib.machines.AbstractMachineBlock;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem {
+public class NuclearFurnace extends AbstractMachineBlock implements RecipeDisplayItem {
 
     private static final int[] BACKGROUND = {0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26};
     private static final int FUEL = 21;
@@ -51,19 +51,11 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
     private final Map<Block, Integer> map = new HashMap<>();
 
     public NuclearFurnace() {
-        super(Categories.MACHINES, Items.NUCLEAR_FURNACE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+        super(Categories.MACHINES, Items.NUCLEAR_FURNACE, RecipeType.NULL, new ItemStack[] {
                 
         });
 
-        registerBlockHandler(getId(), (p, b, item1, reason) -> {
-            BlockMenu menu = BlockStorage.getInventory(b);
-            if (menu != null) {
-                menu.dropItems(b.getLocation(), FUEL, INPUT, OUTPUT);
-            }
-            return true;
-        });
-
-        SlimefunPlugin.getMinecraftRecipeService().subscribe(snapshot -> {
+        Slimefun.getMinecraftRecipeService().subscribe(snapshot -> {
             for (FurnaceRecipe furnaceRecipe : snapshot.getRecipes(FurnaceRecipe.class)) {
                 RecipeChoice choice = furnaceRecipe.getInputChoice();
 
@@ -91,7 +83,7 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
 
         //display recipes
         for (Map.Entry<String, Integer> entry : this.fuels.entrySet()) {
-            SlimefunItem sfItem = SlimefunItem.getByID(entry.getKey());
+            SlimefunItem sfItem = SlimefunItem.getById(entry.getKey());
             if (sfItem != null) {
                 ItemStack stack = sfItem.getItem().clone();
                 ItemMeta meta = stack.getItemMeta();
@@ -108,7 +100,7 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
     }
 
     @Override
-    public void setupMenu(@Nonnull BlockMenuPreset preset) {
+    public void setup(@Nonnull BlockMenuPreset preset) {
         for (int i : BACKGROUND) {
             preset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
@@ -122,19 +114,25 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
     }
 
     @Override
-    protected void tick(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Config config) {
+    protected boolean process(@Nonnull Block b, @Nonnull BlockMenu menu) {
         ItemStack input = menu.getItemInSlot(INPUT);
 
-        if (input == null) return;
+        if (input == null) return false;
 
         int fuel = this.map.getOrDefault(b, 0);
 
         if (fuel < 1) {
             fuel = addFuel(menu, menu.getItemInSlot(FUEL));
-            if (fuel < 1) return;
+            if (fuel < 1) return false;
         }
 
         process(b, menu, input, fuel);
+        return true;
+    }
+
+    @Override
+    protected int getStatusSlot() {
+        return STATUS;
     }
 
     /**
@@ -143,7 +141,7 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
     private int addFuel(@Nonnull BlockMenu menu, @Nullable ItemStack fuel) {
         if (fuel == null) return 0;
         
-        String id = StackUtils.getID(fuel);
+        String id = StackUtils.getId(fuel);
 
         if (id == null) return 0;
 
@@ -170,14 +168,14 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
         menu.replaceExistingItem(STATUS, getFuelItem(fuel), false);
         
     }
-    
-    @Nonnull
+
+    public int[] getOutputSlots() {
+        return new int[] {OUTPUT};
+    }
+
     @Override
-    public int[] getTransportSlots(@Nonnull DirtyChestMenu menu, @Nonnull ItemTransportFlow flow, ItemStack item) {
-        if (flow == ItemTransportFlow.WITHDRAW) {
-            return new int[] {OUTPUT};
-        }
-        String id = StackUtils.getID(item);
+    public int[] getInputSlots(DirtyChestMenu menu, ItemStack item) {
+        String id = StackUtils.getId(item);
         if (id == null) {
             if (this.recipes.containsKey(item.getType())) {
                 return new int[] {INPUT};
@@ -186,6 +184,10 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
             return new int[] {FUEL};
         }
         return new int[0];
+    }
+
+    public int[] getInputSlots() {
+        return new int[] {INPUT, FUEL};
     }
 
     @Nonnull
@@ -202,7 +204,7 @@ public class NuclearFurnace extends AbstractTicker implements RecipeDisplayItem 
 
     @Nonnull
     private static ItemStack getFuelItem(int fuel) {
-        return new CustomItem(
+        return new CustomItemStack(
                 fuel < 1 ? Material.GRAY_STAINED_GLASS_PANE :
                         fuel < 36 ? Material.RED_STAINED_GLASS_PANE :
                                 fuel < 161 ? Material.ORANGE_STAINED_GLASS_PANE :

@@ -1,8 +1,8 @@
 package io.github.addoncommunity.slimechem.utils;
 
 import io.github.addoncommunity.slimechem.SlimeChem;
+import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.WordUtils;
 import lombok.Data;
-import org.apache.commons.lang.WordUtils;
 
 import javax.annotation.Nonnull;
 import java.io.ByteArrayOutputStream;

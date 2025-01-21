@@ -5,7 +5,6 @@ import io.github.addoncommunity.slimechem.implementation.attributes.Ingredient;
 import io.github.addoncommunity.slimechem.implementation.attributes.Itemable;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;

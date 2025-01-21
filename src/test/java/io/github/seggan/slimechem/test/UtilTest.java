@@ -4,7 +4,7 @@ import io.github.addoncommunity.slimechem.implementation.atomic.Element;
 import io.github.addoncommunity.slimechem.lists.Constants;
 import io.github.addoncommunity.slimechem.utils.StringUtil;
 import io.github.addoncommunity.slimechem.utils.Util;
-import org.apache.commons.lang.StringUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.StringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

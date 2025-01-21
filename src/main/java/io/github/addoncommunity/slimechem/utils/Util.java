@@ -1,8 +1,8 @@
 package io.github.addoncommunity.slimechem.utils;
 
 import io.github.addoncommunity.slimechem.implementation.atomic.isotopes.Isotope;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.core.attributes.Radioactivity;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 
 import java.util.List;
 

@@ -6,18 +6,16 @@ import io.github.addoncommunity.slimechem.implementation.atomic.MoleculeIngredie
 import io.github.addoncommunity.slimechem.implementation.atomic.isotopes.Isotope;
 import io.github.addoncommunity.slimechem.lists.Categories;
 import io.github.addoncommunity.slimechem.lists.Items;
-import io.github.mooy1.infinitylib.abstracts.AbstractMachine;
-import io.github.mooy1.infinitylib.presets.MenuPreset;
-import io.github.mooy1.infinitylib.recipes.normal.RandomRecipeMap;
+import io.github.mooy1.infinitylib.machines.AbstractMachineBlock;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.RandomizedSet;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.RandomizedSet;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -25,6 +23,8 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Dissolves {@link Molecule}s, {@link Material}s, and {@link SlimefunItemStack}s
@@ -33,7 +33,7 @@ import java.util.Arrays;
  * @author Mooy1
  *
  */
-public class ChemicalDissolver extends AbstractMachine {
+public class ChemicalDissolver extends AbstractMachineBlock {
     
     public static final int ENERGY = 36;
     private static final int[] inputSlots = {2, 3, 4, 5, 6};
@@ -42,7 +42,7 @@ public class ChemicalDissolver extends AbstractMachine {
     private static final int[] outputBorder = {28, 29, 30, 31, 32, 33, 34, 37, 43, 46, 52};
     private static final int[] background = {0, 8, 9, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 35, 36, 44, 45, 53};
     
-    private final RandomRecipeMap recipes = new RandomRecipeMap();
+    private final Map<ItemStack, RandomizedSet<ItemStack>> recipes = new HashMap();
 
     private static RandomizedSet<ItemStack> makeRecipe(int[] chances, MoleculeIngredient... ingredients) {
         RandomizedSet<ItemStack> map = new RandomizedSet<>();
@@ -61,9 +61,12 @@ public class ChemicalDissolver extends AbstractMachine {
     }
 
     public ChemicalDissolver() {
-        super(Categories.MACHINES, Items.CHEMICAL_DISSOLVER, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+        super(Categories.MACHINES, Items.CHEMICAL_DISSOLVER, RecipeType.NULL, new ItemStack[] {
                 
-        }, 0, ENERGY);
+        });
+
+        energyCapacity(ENERGY * 4);
+        energyPerTick(ENERGY);
 
         // molecules
         for (Molecule molecule : Molecule.values()) {
@@ -154,32 +157,28 @@ public class ChemicalDissolver extends AbstractMachine {
     }
 
     @Override
-    public void setupMenu(@Nonnull BlockMenuPreset preset) {
+    public void setup(@Nonnull BlockMenuPreset preset) {
         for (int i : inputBorder) {
-            preset.addItem(i, MenuPreset.borderItemInput, ChestMenuUtils.getEmptyClickHandler());
+            preset.addItem(i, ChestMenuUtils.getInputSlotTexture(), ChestMenuUtils.getEmptyClickHandler());
         }
         for (int i : outputBorder) {
-            preset.addItem(i, MenuPreset.borderItemOutput, ChestMenuUtils.getEmptyClickHandler());
+            preset.addItem(i, ChestMenuUtils.getOutputSlotTexture(), ChestMenuUtils.getEmptyClickHandler());
         }
         for (int i : background) {
             preset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
     }
 
-    @Nonnull
-    @Override
-    protected int[] getTransportSlots(@Nonnull DirtyChestMenu dirtyChestMenu, @Nonnull ItemTransportFlow itemTransportFlow, ItemStack itemStack) {
-        if (itemTransportFlow == ItemTransportFlow.INSERT) {
-            return inputSlots;
-        } else if (itemTransportFlow == ItemTransportFlow.WITHDRAW) {
-            return outputSlots;
-        } else {
-            return new int[0];
-        }
+    public int[] getInputSlots() {
+        return inputSlots;
+    }
+
+    public int[] getOutputSlots() {
+        return outputSlots;
     }
 
     @Override
-    protected boolean process(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull Config config) {
+    protected boolean process(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
         ItemStack input = null;
         for (int i : inputSlots) {
             if (blockMenu.getItemInSlot(i) != null) {
@@ -192,7 +191,7 @@ public class ChemicalDissolver extends AbstractMachine {
         }
         int max = Math.min(16, input.getAmount());
         for (int i = 0; i < max ; i++) {
-            ItemStack output = this.recipes.get(input);
+            ItemStack output = this.recipes.get(input).getRandom();
             if (output == null || !blockMenu.fits(output, outputSlots)) {
                 break;
             }
@@ -203,8 +202,7 @@ public class ChemicalDissolver extends AbstractMachine {
     }
 
     @Override
-    public int getCapacity() {
-        return ENERGY * 4;
+    protected int getStatusSlot() {
+        return 22;
     }
-
 }

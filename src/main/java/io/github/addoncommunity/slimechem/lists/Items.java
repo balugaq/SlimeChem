@@ -2,13 +2,17 @@ package io.github.addoncommunity.slimechem.lists;
 
 import io.github.addoncommunity.slimechem.implementation.machines.ChemicalCombiner;
 import io.github.addoncommunity.slimechem.implementation.machines.ChemicalDissolver;
-import io.github.mooy1.infinitylib.presets.LorePreset;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineTier;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineType;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.experimental.UtilityClass;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;
 
 @UtilityClass
@@ -20,7 +24,7 @@ public final class Items {
             "&bChemical Dissolver",
             "&7Dissolves materials into their chemical parts and molecules into elements",
             "",
-            LorePreset.energy(ChemicalDissolver.ENERGY) + "per item"
+            LoreBuilder.power(ChemicalDissolver.ENERGY, "per item")
     );
     public static final SlimefunItemStack CHEMICAL_COMBINER = new SlimefunItemStack(
             "CHEMICAL_COMBINER",
@@ -28,7 +32,7 @@ public final class Items {
             "&bChemical Combiner",
             "&7Combines elements and molecules into molecules and materials",
             "",
-            LorePreset.energy(ChemicalCombiner.ENERGY) + "per item"
+            LoreBuilder.power(ChemicalCombiner.ENERGY, "per item")
     );
 
     public static final SlimefunItemStack RTG_1 = new SlimefunItemStack(

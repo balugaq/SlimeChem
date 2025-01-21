@@ -233,7 +233,6 @@ public enum Element implements Ingredient, Atom {
     }
 
     @Getter
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public enum Series {
 
         ALKALI_METALS("Alkali Metals", "ORANGE"),

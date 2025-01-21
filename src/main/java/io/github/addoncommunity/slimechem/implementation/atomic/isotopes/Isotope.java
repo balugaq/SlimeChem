@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,7 +21,6 @@ import io.github.addoncommunity.slimechem.lists.Constants;
 import io.github.addoncommunity.slimechem.utils.SubNum;
 import io.github.addoncommunity.slimechem.utils.SuperNum;
 import io.github.addoncommunity.slimechem.utils.Util;
-import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.AccessLevel;
@@ -178,8 +178,9 @@ public class Isotope implements Ingredient, Atom {
     public static Isotope getByItem(ItemStack item) {
         if (item == null) return null;
 
-        String id = StackUtils.getID(item);
-        if (id == null) return null;
+        SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
+        if (slimefunItem == null) return null;
+        String id = slimefunItem.getId();
 
         for (Set<Isotope> isotopeSet : isotopes.values()) {
             for (Isotope isotope : isotopeSet) {

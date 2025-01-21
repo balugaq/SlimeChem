@@ -3,8 +3,8 @@ package io.github.addoncommunity.slimechem.implementation.subatomic;
 import io.github.addoncommunity.slimechem.implementation.attributes.Itemable;
 import io.github.addoncommunity.slimechem.lists.Constants;
 import io.github.addoncommunity.slimechem.utils.StringUtil;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 
 /**

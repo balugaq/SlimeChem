@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.addoncommunity.slimechem.SlimeChem;
 import io.github.addoncommunity.slimechem.implementation.atomic.Element;
-import io.github.mooy1.infinitylib.player.LeaveListener;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideImplementation;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
@@ -30,16 +32,15 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
  * @author Mooy1
  * 
  */
-public final class ElementCategory extends FlexCategory {
+public final class ElementCategory extends FlexItemGroup {
 
-    private final ItemStack BACKGROUND = new CustomItem(Material.BLACK_STAINED_GLASS_PANE, "");
+    private final ItemStack BACKGROUND = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, "");
     private final ChestMenu[] menus = new ChestMenu[4];
     private final Map<UUID, Integer> history = new HashMap<>();
-    private final SlimefunGuideImplementation implementation = SlimefunPlugin.getRegistry().getSlimefunGuide(SlimefunGuideMode.SURVIVAL_MODE);
+    private final SlimefunGuideImplementation implementation = Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.SURVIVAL_MODE);
     
     public ElementCategory(SlimeChem plugin) {
-        super(new NamespacedKey(plugin, "periodic_table"), new CustomItem(Material.DIAMOND, "Periodic Table"), 3);
-        LeaveListener.add(this.history);
+        super(new NamespacedKey(plugin, "periodic_table"), new CustomItemStack(Material.DIAMOND, "Periodic Table"), 3);
         this.menus[0] = makeTopMenu();
         this.menus[1] = makeBottomMenu();
         this.menus[2] = makeMetalMenu();
@@ -117,7 +118,7 @@ public final class ElementCategory extends FlexCategory {
     
     @Nonnull
     private static ItemStack makeItem(Element e) {
-        return new CustomItem(
+        return new CustomItemStack(
                 Objects.requireNonNull(Material.getMaterial(e.getSeries().getColor() + "_STAINED_GLASS_PANE")),
                 ChatColor.AQUA + "" + e.getSymbol() + " " + e.getNumber(),
                 ChatColor.AQUA + e.getName(),
@@ -127,7 +128,7 @@ public final class ElementCategory extends FlexCategory {
     
     @Nonnull
     private static ItemStack makeItem(Element e, String lore) {
-        return new CustomItem(
+        return new CustomItemStack(
                 Objects.requireNonNull(Material.getMaterial(e.getSeries().getColor() + "_STAINED_GLASS_PANE")),
                 ChatColor.AQUA + "" + e.getSymbol() + " " + e.getNumber(),
                 ChatColor.AQUA + e.getName(),
@@ -157,7 +158,7 @@ public final class ElementCategory extends FlexCategory {
         menu.addMenuOpeningHandler(player -> {
             player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
     
-            menu.replaceExistingItem(0, ChestMenuUtils.getBackButton(player, "", ChatColor.GRAY + SlimefunPlugin.getLocalization().getMessage(player, "guide.back.guide")));
+            menu.replaceExistingItem(0, ChestMenuUtils.getBackButton(player, "", ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")));
     
             menu.replaceExistingItem(45, ChestMenuUtils.getPreviousButton(player, page + 1, 4));
     

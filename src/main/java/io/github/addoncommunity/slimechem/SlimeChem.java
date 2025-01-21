@@ -2,7 +2,6 @@ package io.github.addoncommunity.slimechem;
 
 import io.github.addoncommunity.slimechem.implementation.atomic.isotopes.IsotopeLoader;
 import io.github.addoncommunity.slimechem.setup.Registry;
-import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -20,8 +19,6 @@ public class SlimeChem extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         instance = this;
 
-        PluginUtils.setup("&bSlimeChem&7", this, "Slimefun-Addon-Community/SlimeChem/master", getFile());
-        
         @SuppressWarnings("unused")
         final Metrics metrics = new Metrics(this, 9490);
 

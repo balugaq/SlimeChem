@@ -21,9 +21,12 @@ import io.github.addoncommunity.slimechem.implementation.subatomic.Nucleon;
 import io.github.addoncommunity.slimechem.lists.Items;
 import io.github.addoncommunity.slimechem.lists.RecipeTypes;
 import lombok.Getter;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -94,7 +97,7 @@ public final class Registry {
                         items[i] = stack;
                     }
                     if (items[items.length - 1] != null) {
-                        items[items.length - 1] = new CustomItem(
+                        items[items.length - 1] = new CustomItemStack(
                             Material.WHITE_DYE,
                             "&7And more..."
                         );
